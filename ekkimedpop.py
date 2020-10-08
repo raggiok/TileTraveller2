@@ -16,6 +16,7 @@ def pull_lever(col_row,coins,coins_list_temp):
         pass
     if col_row in coins_list_temp:
         lever = random.choice([YES,NO])
+        print("Pull a lever (y/n): "+lever)
         if lever == 'y':
             coins += 1
             print("You received 1 coin, your total is now {}.".format(coins))
@@ -79,15 +80,12 @@ def play_one_move(col, row, valid_directions, coins, coins_list_temp, invalid_mo
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
-    direction = random.choice([NORTH, EAST, SOUTH, WEST])
+    direction = random.choice(["n","e","s","w"])
+    print("Direction: "+ direction)
     direction = direction.lower()
 
     if not direction in valid_directions:
-        col_row =str(col)+"."+str(row)
-        if col_row in coins_list_temp:
-            index = coins_list_temp.index(col_row)
-            coins_list_temp.pop(index)
-            invalid_moves += 1
+        invalid_moves += 1
         print("Not a valid direction!")
 
     else:
@@ -100,7 +98,7 @@ def play_one_move(col, row, valid_directions, coins, coins_list_temp, invalid_mo
 
 
 # The main program starts here
-def play():
+def play(seed):
     victory = False
     row = 1
     col = 1
@@ -114,10 +112,11 @@ def play():
         print_directions(valid_directions)
         victory, col, row ,coins, invalid_moves, valid_moves = play_one_move(col, row, valid_directions, coins, coins_list_temp, invalid_moves, valid_moves)
         total_moves = valid_moves + invalid_moves
-    print("Victory! Total coins {}. Moves {}".format(coins, total_moves))
+    print("Victory! Total coins {}. Moves {}.".format(coins, total_moves))
     return input("Play again (y/n): ")
 
 play_again = "y"
 while play_again.lower() == "y":
-    random.seed(int(input("Input seed: ")))
-    play_again = play()
+    seed = int(input("Input seed: "))
+    random.seed(seed)
+    play_again = play(seed)
