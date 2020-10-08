@@ -6,7 +6,7 @@ WEST = 'w'
 
 
 
-def pull_lever(col_row,coins):
+def pull_lever(col_row,coins,coins_list_temp):
     try:
         index = coins_list_temp.index(col_row)
     except ValueError:
@@ -104,7 +104,7 @@ def find_directions(col, row):
         valid_directions = SOUTH+WEST
     return valid_directions
 
-def play_one_move(col, row, valid_directions, coins):
+def play_one_move(col, row, valid_directions, coins, coins_list_temp):
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
@@ -122,20 +122,26 @@ def play_one_move(col, row, valid_directions, coins):
     else:
         col, row = move(direction, col, row)
         col_row =str(col)+"."+str(row)
-        coins = pull_lever(col_row,coins)
+        coins = pull_lever(col_row,coins,coins_list_temp)
         victory = is_victory(col, row)
     return victory, col, row, coins
 
-# The main program starts here
-victory = False
-row = 1
-col = 1
-coins = 0
-coins_list_temp = ['1.2','2.2','2.3','3.2']
-coins_list = [1,1,1,1]
 
-while not victory:
-    valid_directions = find_directions(col, row)
-    print_directions(valid_directions)
-    victory, col, row ,coins = play_one_move(col, row, valid_directions, coins)
-print("Victory! Total coins {}.".format(coins))
+# The main program starts here
+def play():
+    victory = False
+    row = 1
+    col = 1
+    coins = 0 
+    coins_list_temp = ['1.2','2.2','2.3','3.2']
+
+    while not victory:
+        valid_directions = find_directions(col, row)
+        print_directions(valid_directions)
+        victory, col, row ,coins = play_one_move(col, row, valid_directions, coins, coins_list_temp)
+    print("Victory! Total coins {}.".format(coins))
+    return input("Play again (y/n): ")
+
+play_again = "y"
+while play_again.lower == "y":
+    play_again = play()
