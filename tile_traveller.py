@@ -14,9 +14,12 @@ def pull_lever(col,row,coins):
             if lever == 'y':
                 coins += 1
                 print("You received 1 coin, your total is now {}.".format(coins))
+                coins_list[0] = 0
+            elif lever =='n':
+                pass
             else:
                 pass
-            coins_list[0] = 0
+            
 
     elif col == 2 and row == 2:
         if coins_list[1] == 1:
@@ -109,10 +112,15 @@ def play_one_move(col, row, valid_directions, coins):
     victory = False
     direction = input("Direction: ")
     direction = direction.lower()
+    col_row =str(col)+"."+str(row)
     
 
     if not direction in valid_directions:
+        if col_row in coins_list_temp:
+            index = coins_list_temp.index(col_row)
+            coins_list_temp.pop(index)
         print("Not a valid direction!")
+
     else:
         col, row = move(direction, col, row)
         coins = pull_lever(col,row,coins)
@@ -124,6 +132,7 @@ victory = False
 row = 1
 col = 1
 coins = 0 
+coins_list_temp = ['1.2','2.2','2.3','3.2']
 coins_list = [1,1,1,1]
 
 while not victory:
