@@ -9,16 +9,15 @@ WEST = 'w'
 def pull_lever(col_row,coins):
     try:
         index = coins_list_temp.index(col_row)
-        if col_row in coins_list_temp:
-            lever = input("Pull a lever (y/n): ").lower()
-            if lever == 'y':
-                coins += 1
-                print("You received 1 coin, your total is now {}.".format(coins))
-                coins_list_temp.pop(index)
-        return coins
     except ValueError:
         pass
-
+    if col_row in coins_list_temp:
+        lever = input("Pull a lever (y/n): ").lower()
+        if lever == 'y':
+            coins += 1
+            print("You received 1 coin, your total is now {}.".format(coins))
+    return coins
+  
 
     #elif col == 2 and row == 2:
     #    if coins_list[1] == 1:
@@ -131,7 +130,7 @@ def play_one_move(col, row, valid_directions, coins):
 victory = False
 row = 1
 col = 1
-coins = 0 
+coins = 0
 coins_list_temp = ['1.2','2.2','2.3','3.2']
 coins_list = [1,1,1,1]
 
