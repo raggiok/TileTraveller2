@@ -6,51 +6,50 @@ WEST = 'w'
 
 
 
-def pull_lever(col,row,coins):
-
-    if col == 1 and row == 2:
-        if coins_list[0] == 1:
+def pull_lever(col_row,coins):
+    try:
+        index = coins_list_temp.index(col_row)
+        if col_row in coins_list_temp:
             lever = input("Pull a lever (y/n): ").lower()
             if lever == 'y':
                 coins += 1
                 print("You received 1 coin, your total is now {}.".format(coins))
-                coins_list[0] = 0
-            elif lever =='n':
-                pass
-            else:
-                pass
-            
+                coins_list_temp.pop(index)
+        return coins
+    except ValueError:
+        pass
 
-    elif col == 2 and row == 2:
-        if coins_list[1] == 1:
-            lever = input("Pull a lever (y/n): ").lower()
-            if lever == 'y':
-                coins += 1
-                print("You received 1 coin, your total is now {}.".format(coins))
-            else:
-                pass
-            coins_list[1] = 0
 
-    elif col == 2 and row == 3:
-        if coins_list[2] == 1:
-            lever = input("Pull a lever (y/n): ").lower()
-            if lever == 'y':
-                coins += 1
-                print("You received 1 coin, your total is now {}.".format(coins))
-            else:
-                pass
-            coins_list[2] = 0
-
-    elif col == 3 and row == 2:
-        if coins_list[3] == 1:
-            lever = input("Pull a lever (y/n): ").lower()
-            if lever == 'y':
-                coins += 1
-                print("You received 1 coin, your total is now {}.".format(coins))
-            else:
-                pass
-            coins_list[3] = 0
-    return coins
+    #elif col == 2 and row == 2:
+    #    if coins_list[1] == 1:
+    #        lever = input("Pull a lever (y/n): ").lower()
+    #        if lever == 'y':
+    #            coins += 1
+    #            print("You received 1 coin, your total is now {}.".format(coins))
+    #        else:
+    #            pass
+    #        coins_list[1] = 0
+#
+    #elif col == 2 and row == 3:
+    #    if coins_list[2] == 1:
+    #        lever = input("Pull a lever (y/n): ").lower()
+    #        if lever == 'y':
+    #            coins += 1
+    #            print("You received 1 coin, your total is now {}.".format(coins))
+    #        else:
+    #            pass
+    #        coins_list[2] = 0
+#
+    #elif col == 3 and row == 2:
+    #    if coins_list[3] == 1:
+    #        lever = input("Pull a lever (y/n): ").lower()
+    #        if lever == 'y':
+    #            coins += 1
+    #            print("You received 1 coin, your total is now {}.".format(coins))
+    #        else:
+    #            pass
+    #        coins_list[3] = 0
+    #return coins
 
 
 def move(direction, col, row):
@@ -112,10 +111,10 @@ def play_one_move(col, row, valid_directions, coins):
     victory = False
     direction = input("Direction: ")
     direction = direction.lower()
-    col_row =str(col)+"."+str(row)
     
 
     if not direction in valid_directions:
+        col_row =str(col)+"."+str(row)
         if col_row in coins_list_temp:
             index = coins_list_temp.index(col_row)
             coins_list_temp.pop(index)
@@ -123,7 +122,8 @@ def play_one_move(col, row, valid_directions, coins):
 
     else:
         col, row = move(direction, col, row)
-        coins = pull_lever(col,row,coins)
+        col_row =str(col)+"."+str(row)
+        coins = pull_lever(col_row,coins)
         victory = is_victory(col, row)
     return victory, col, row, coins
 
